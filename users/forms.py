@@ -3,7 +3,6 @@ This file contains all form classes created in users app.
 '''
 from django import forms
 from .models import CustomUser
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 
 # This is the form for the creation of new users.
 class CustomUserModelForm(forms.ModelForm):
