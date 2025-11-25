@@ -97,8 +97,16 @@ class Student(models.Model):
     guardian_address = models.CharField(max_length=100) # This stores the address of the guardian of the student.
     guardian_number = models.CharField(max_length=15) # This stores the phone number of the guardian of the student.
 
+    # This method determines the representation of all instances of the Student model.
+    def __str__(self):
+        return f'{self.student.username} {self.student.last_name} {self.student.first_name} {self.student.other_names}'
+
 # The teacher model is created to group all teachers in one place and also add additional information of teachers needed.
 class Teacher(models.Model):
     teacher = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='teacher_profile') # This connects the teacher model to the CustomUser model
     # subject
     phone_number = models.CharField(max_length=15) # This saves the phone number of the teacher.
+
+    # This method determines the representation of all instances of the Teacher model.
+    def __str__(self):
+        return f'{self.teacher.username} {self.teacher.last_name} {self.teacher.first_name} {self.teacher.other_names}'
