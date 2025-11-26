@@ -5,6 +5,7 @@ The following models will handle registration of users.
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.hashers import make_password
+from academics.models import Subject, Class_Level
 
 # Create your models here.
 
@@ -93,6 +94,7 @@ class CustomUser(AbstractUser):
 # The student model is created to group all students in one place and also add additional information of students needed.
 class Student(models.Model):
     student = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='student_profile') # This links the student model to the customUser model.
+    class_assigned = models.ForeignKey(Class_Level, on_delete=models.CASCADE, related_name='students') # This links the student to the class assigned to him or her.
     guardian_name = models.CharField(max_length=100) # This stores the name of the guardian of the student.
     guardian_address = models.CharField(max_length=100) # This stores the address of the guardian of the student.
     guardian_number = models.CharField(max_length=15) # This stores the phone number of the guardian of the student.
@@ -104,7 +106,7 @@ class Student(models.Model):
 # The teacher model is created to group all teachers in one place and also add additional information of teachers needed.
 class Teacher(models.Model):
     teacher = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='teacher_profile') # This connects the teacher model to the CustomUser model
-    # subject
+    subject = models.ManyToManyField(Subject, related_name='teacher_subjects') # This connects a teacher to the subjects taught by the teacher.
     phone_number = models.CharField(max_length=15) # This saves the phone number of the teacher.
 
     # This method determines the representation of all instances of the Teacher model.
